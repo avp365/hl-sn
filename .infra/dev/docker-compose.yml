@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: docker
+    hostname: "social-net"    
+    ports:
+        - "8080:8080"
+    volumes:
+    - ../../:/app
+    - .container/go/:/go  
+    env_file:
+    - .env
+    tty: true  
+    networks:
+    - service-network      
+networks:
+ service-network:
+   name: dev
+   driver: bridge
