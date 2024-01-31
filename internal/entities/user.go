@@ -1,18 +1,13 @@
 package entities
 
-import "errors"
+import "time"
 
 type User struct {
-	ID    int    `json:"id"`
-	Name  string `json:"name"`
-	Email string `json:"email"`
-	Age   int    `json:"age"`
-}
-
-func (u *User) Validate() error {
-	if u.Name == "" || u.Email == "" || u.Age == 0 {
-		return errors.New("invalid user structure")
-	}
-
-	return nil
+	ID         int       `json:"id"`
+	FirstName  string    `json:"first_name"`
+	SecondName string    `json:"second_name"`
+	Birthdate  time.Time `json:"birthdate"`
+	Biography  string    `json:"biography"`
+	City       string    `json:"city"`
+	Password   int       `json:"password"`
 }
