@@ -8,7 +8,7 @@ type Form struct {
 	Birthdate  time.Time `form:"birthdate" time_format:"2006-01-02"`
 	Biography  string    `form:"biography"`
 	City       string    `form:"city"`
-	Password   int       `form:"password" binding:"required"`
+	Password   string    `form:"password" binding:"required"`
 }
 
 func (u *Form) Validate() error {

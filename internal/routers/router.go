@@ -27,9 +27,17 @@ func UserRegister(c *gin.Context) {
 		return
 	}
 
-	user.RegisterUserHandler(&form)
+	userId, err := user.RegisterUserHandler(&form)
 
-	c.String(200, "Hello %s", form.FirstName)
+	if err != nil {
+		c.String(http.StatusInternalServerError, "Ошибка сервера: %v", err)
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"user_id": userId,
+	})
+
 }
 
 func UserGetById(c *gin.Context) {
