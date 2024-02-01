@@ -5,7 +5,7 @@ import (
 	"github.com/avp365/hl-sn/internal/repositories"
 )
 
-func RegisterUserHandler(form *entities.Form) (int, error) {
+func RegisterUserHandler(form *entities.RegisterForm) (int, error) {
 	var user entities.User
 
 	user.FirstName = form.FirstName

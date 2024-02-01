@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/avp365/hl-sn/internal/entities"
+	"github.com/avp365/hl-sn/internal/handlers/login"
 	"github.com/avp365/hl-sn/internal/handlers/user"
 	"github.com/gin-gonic/gin"
 )
@@ -17,18 +18,35 @@ func Version(c *gin.Context) {
 }
 
 func Login(c *gin.Context) {
+	var loginForm entities.LoginForm
 
-}
-
-func UserRegister(c *gin.Context) {
-	var form entities.Form
-
-	if err := c.ShouldBind(&form); err != nil {
+	if err := c.ShouldBind(&loginForm); err != nil {
 		c.String(http.StatusBadRequest, "bad request: %v", err)
 		return
 	}
 
-	userId, err := user.RegisterUserHandler(&form)
+	ok, err := login.LoginHandler(&loginForm)
+
+	if ok == "ok" {
+		c.JSON(http.StatusOK, SignedResponse{
+			Token:   tokenStr,
+			Message: "logged in",
+		})
+
+		return
+	}
+	c.String(http.StatusNotFound, "Пользователь не найден")
+}
+
+func UserRegister(c *gin.Context) {
+	var registerForm entities.RegisterForm
+
+	if err := c.ShouldBind(&registerForm); err != nil {
+		c.String(http.StatusBadRequest, "bad request: %v", err)
+		return
+	}
+
+	userId, err := user.RegisterUserHandler(&registerForm)
 
 	if err != nil {
 		c.String(http.StatusInternalServerError, "Ошибка сервера: %v", err)
