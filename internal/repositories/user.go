@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/avp365/hl-sn/internal/entities"
+	"github.com/avp365/hl-sn/internal/pkg/password"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 	log "github.com/sirupsen/logrus"
@@ -22,6 +23,7 @@ func InitUserRepository(db *pgxpool.Pool) error {
 	return nil
 }
 func (r *UserRepository) CreateUser(user entities.User) (int, error) {
+	password, _ := password.HashPassword(user.Password)
 
 	query := `INSERT INTO ` + tableName + ` (first_name, second_name, birthdate, biography, city, password) VALUES (@FirstName, @SecondName, @Birthdate, @Biography, @City, @Password) returning (id)`
 
@@ -31,7 +33,7 @@ func (r *UserRepository) CreateUser(user entities.User) (int, error) {
 		"Birthdate":  user.Birthdate,
 		"Biography":  user.Biography,
 		"City":       user.City,
-		"Password":   user.Password,
+		"Password":   password,
 	}
 	var user_id int
 	err := r.DBPostr.QueryRow(context.Background(), query, args).Scan(&user_id)
