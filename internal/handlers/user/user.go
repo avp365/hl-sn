@@ -1,8 +1,6 @@
 package user
 
 import (
-	"net/http"
-
 	"github.com/avp365/hl-sn/internal/entities"
 	"github.com/avp365/hl-sn/internal/repositories"
 )
@@ -20,11 +18,8 @@ func RegisterUserHandler(form *entities.Form) (int, error) {
 	return repositories.UsrRep.CreateUser(user)
 }
 
-func GetUserHandler(w http.ResponseWriter, r *http.Request) {
-}
+func UserGetByIdHandler(userId int) (entities.User, error) {
 
-func GetUserListHandler(w http.ResponseWriter, r *http.Request) {
-}
+	return repositories.UsrRep.UserGetById(userId)
 
-func DeleteUserHandler(w http.ResponseWriter, r *http.Request) {
 }

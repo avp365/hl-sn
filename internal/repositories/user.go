@@ -43,3 +43,17 @@ func (r *UserRepository) CreateUser(user entities.User) (int, error) {
 
 	return user_id, nil
 }
+func (r *UserRepository) UserGetById(userid int) (entities.User, error) {
+
+	query := `SELECT id, first_name, second_name, birthdate, biography, city FROM ` + tableName + ` where id=$1`
+
+	var user entities.User
+	err := r.DBPostr.QueryRow(context.Background(), query, userid).Scan(&user.ID, &user.FirstName, &user.SecondName, &user.Birthdate, &user.Biography, &user.City)
+
+	if err != nil {
+		log.Printf("db error: %v\n", err)
+		return user, err
+	}
+
+	return user, nil
+}

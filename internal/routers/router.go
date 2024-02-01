@@ -2,6 +2,7 @@ package router
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/avp365/hl-sn/internal/entities"
 	"github.com/avp365/hl-sn/internal/handlers/user"
@@ -41,6 +42,29 @@ func UserRegister(c *gin.Context) {
 }
 
 func UserGetById(c *gin.Context) {
+	useridFromParam := c.Param("userid")
+
+	userid, err := strconv.Atoi(useridFromParam)
+
+	if err != nil {
+		c.String(http.StatusInternalServerError, "Ошибка сервера: %v", err)
+		return
+	}
+
+	user, err := user.UserGetByIdHandler(userid)
+
+	if err != nil {
+		c.String(http.StatusInternalServerError, "Ошибка сервера: %v", err)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"id":          user.ID,
+		"first_name":  user.FirstName,
+		"second_name": user.SecondName,
+		"birthdate":   user.Birthdate,
+		"biography":   user.Biography,
+		"city":        user.City,
+	})
 
 }
 
@@ -49,7 +73,7 @@ func Run() {
 	router := gin.Default()
 
 	router.GET("/", Version)
-	router.GET("/user/get/{id}", UserGetById)
+	router.GET("/user/get/:userid", UserGetById)
 
 	router.POST("/user/register", UserRegister)
 	router.POST("/login", Login)
