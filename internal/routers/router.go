@@ -7,7 +7,9 @@ import (
 	"github.com/avp365/hl-sn/internal/entities"
 	"github.com/avp365/hl-sn/internal/handlers/login"
 	"github.com/avp365/hl-sn/internal/handlers/user"
+	"github.com/avp365/hl-sn/internal/pkg/token"
 	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt"
 )
 
 func Version(c *gin.Context) {
@@ -25,17 +27,17 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	ok, err := login.LoginHandler(&loginForm)
+	token, err := login.LoginHandler(&loginForm)
 
-	if ok == "ok" {
-		c.JSON(http.StatusOK, SignedResponse{
-			Token:   tokenStr,
-			Message: "logged in",
-		})
-
+	if err != nil {
+		c.String(http.StatusInternalServerError, "Ошибка сервера: %v", err)
 		return
 	}
-	c.String(http.StatusNotFound, "Пользователь не найден")
+
+	c.JSON(http.StatusOK, gin.H{
+		"token": token,
+	})
+
 }
 
 func UserRegister(c *gin.Context) {
@@ -85,14 +87,43 @@ func UserGetById(c *gin.Context) {
 	})
 
 }
+func jwtMiddleware() gin.HandlerFunc {
 
+	return func(c *gin.Context) {
+
+		jwtToken, err := token.ExtractBearerToken(c.GetHeader("Authorization"))
+		if err != nil {
+			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+				"Message": err.Error(),
+			})
+			return
+		}
+
+		token, err := token.ParseToken(jwtToken)
+		if err != nil {
+			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+				"Message": err.Error(),
+			})
+			return
+		}
+
+		_, OK := token.Claims.(jwt.MapClaims)
+
+		if !OK {
+			c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
+				"Message": "unable to parse claims",
+			})
+			return
+		}
+		c.Next()
+	}
+}
 func Run() {
 
 	router := gin.Default()
 
 	router.GET("/", Version)
-	router.GET("/user/get/:userid", UserGetById)
-
+	router.GET("/user/get/:userid", jwtMiddleware(), UserGetById)
 	router.POST("/user/register", UserRegister)
 	router.POST("/login", Login)
 

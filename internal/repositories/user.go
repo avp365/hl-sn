@@ -61,7 +61,7 @@ func (r *UserRepository) UserGetById(userid int) (entities.User, error) {
 }
 func (r *UserRepository) UserPasswordGetById(userid int) (entities.User, error) {
 
-	query := `SELECT password FROM ` + tableName + ` where id=$1`
+	query := `SELECT id, password FROM ` + tableName + ` where id=$1`
 
 	var user entities.User
 	err := r.DBPostr.QueryRow(context.Background(), query, userid).Scan(&user.ID, &user.Password)

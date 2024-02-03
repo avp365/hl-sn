@@ -1,0 +1,150 @@
+{
+	"info": {
+		"_postman_id": "60141d4d-c7a8-49d4-b6e1-d9b9a15d41da",
+		"name": "hl-sn",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4937528"
+	},
+	"item": [
+		{
+			"name": "ver.",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{URL_HL_SRV}}/",
+					"protocol": "http",
+					"host": [
+						"{{URL_HL_SRV}}"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "first_name",
+							"value": "Арина",
+							"type": "text"
+						},
+						{
+							"key": "second_name",
+							"value": "Чернышова",
+							"type": "text"
+						},
+						{
+							"key": "birthdate",
+							"value": "2017-02-01",
+							"type": "text"
+						},
+						{
+							"key": "biography",
+							"value": "Играю в онлайн игры",
+							"type": "text"
+						},
+						{
+							"key": "city",
+							"value": "Воронеж",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{URL_HL_SRV}}/user/register",
+					"host": [
+						"{{URL_HL_SRV}}"
+					],
+					"path": [
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwibmJmIjoxNzA0MTEwNDAwfQ.PrvceVa5J3Ii0VLwa8HbamogtSqK1Ahc_tYR1FMS_-o",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{URL_HL_SRV}}/user/get/9",
+					"host": [
+						"{{URL_HL_SRV}}"
+					],
+					"path": [
+						"user",
+						"get",
+						"9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "9",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{URL_HL_SRV}}/login/",
+					"host": [
+						"{{URL_HL_SRV}}"
+					],
+					"path": [
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

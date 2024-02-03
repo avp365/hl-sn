@@ -7,3 +7,6 @@ func GetDBPostgrSettings() DBPostr {
 		Url: env.GetEnv("POSTGRESS_URL", ""),
 	}
 }
+func GetTokenSecretKey() string {
+	return env.GetEnv("TOKEN_SECRET_KEY", "")
+}
