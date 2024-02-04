@@ -1,2 +1,3 @@
 !.gitkeep
 .infra/dev/.container/*
+.infra/srv/psql/data*
