@@ -61,7 +61,7 @@ func (r *UserRepository) UserGetById(userid int) (entities.User, error) {
 }
 func (r *UserRepository) UserSearch(firstName string, lastName string) ([]entities.User, error) {
 
-	query := `SELECT id, first_name, second_name, birthdate, biography, city FROM ` + tableName + ` where first_name LIKE $1 AND second_name LIKE $2`
+	query := `SELECT id, first_name, second_name, birthdate, biography, city FROM ` + tableName + ` where first_name LIKE $1 AND second_name LIKE $2 ORDER BY id`
 
 	rows, err := r.DBPostr.Query(context.Background(), query, firstName+"%", lastName+"%")
 	if err != nil {

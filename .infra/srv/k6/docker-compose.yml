@@ -10,7 +10,8 @@ services:
       - "8086:8086"
     environment:
       - INFLUXDB_DB=k6
-
+    volumes:
+      - ./influxdb/influxdb.conf:/etc/influxdb/influxdb.conf
   grafana:
     image: grafana/grafana:9.3.8
     networks:
@@ -22,7 +23,7 @@ services:
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_BASIC_ENABLED=false
     volumes:
-      - ./grafana:/etc/grafana/provisioning/
+      - ./grafana:/etc/grafana/provisioning
 
   k6:
     image: grafana/k6
