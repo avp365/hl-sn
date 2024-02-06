@@ -23,3 +23,9 @@ func UserGetByIdHandler(userId int) (entities.User, error) {
 	return repositories.UsrRep.UserGetById(userId)
 
 }
+
+func UserSearchHandler(searchForm entities.SearchForm) ([]entities.User, error) {
+
+	return repositories.UsrRep.UserSearch(searchForm.FirstName, searchForm.SecondName)
+
+}

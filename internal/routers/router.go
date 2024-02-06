@@ -87,6 +87,23 @@ func UserGetById(c *gin.Context) {
 	})
 
 }
+func UserSearch(c *gin.Context) {
+	var searchForm entities.SearchForm
+
+	if err := c.ShouldBind(&searchForm); err != nil {
+		c.String(http.StatusBadRequest, "bad request: %v", err)
+		return
+	}
+
+	users, err := user.UserSearchHandler(searchForm)
+
+	if err != nil {
+		c.String(http.StatusInternalServerError, "Ошибка сервера: %v", err)
+		return
+	}
+	c.JSON(http.StatusOK, users)
+
+}
 func jwtMiddleware() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
@@ -124,6 +141,7 @@ func Run() {
 
 	router.GET("/", Version)
 	router.GET("/user/get/:userid", jwtMiddleware(), UserGetById)
+	router.GET("/user/search/", jwtMiddleware(), UserSearch)
 	router.POST("/user/register", UserRegister)
 	router.POST("/login", Login)
 

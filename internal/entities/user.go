@@ -9,5 +9,5 @@ type User struct {
 	Birthdate  time.Time `json:"birthdate"`
 	Biography  string    `json:"biography"`
 	City       string    `json:"city"`
-	Password   string    `json:"password"`
+	Password   string    `db:"-"`
 }

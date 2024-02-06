@@ -13,4 +13,5 @@ docker_stats:
 	docker stats $(PROJECT)
 srv-psql:
 	cd ../srv/psql;docker-compose -p $(PROJECT)-db up
-
+srv-k6:
+	cd ../srv/k6;docker-compose -p $(PROJECT)-hl-test up

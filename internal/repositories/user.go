@@ -59,6 +59,25 @@ func (r *UserRepository) UserGetById(userid int) (entities.User, error) {
 
 	return user, nil
 }
+func (r *UserRepository) UserSearch(firstName string, lastName string) ([]entities.User, error) {
+
+	query := `SELECT id, first_name, second_name, birthdate, biography, city FROM ` + tableName + ` where first_name LIKE $1 AND second_name LIKE $2`
+
+	rows, err := r.DBPostr.Query(context.Background(), query, firstName+"%", lastName+"%")
+	if err != nil {
+		log.Printf("db error Query: %v\n", err)
+		return []entities.User{}, err
+	}
+
+	users, err := pgx.CollectRows(rows, pgx.RowToStructByName[entities.User])
+
+	if err != nil {
+		log.Printf("db error CollectRows: %v\n", err)
+		return []entities.User{}, err
+	}
+
+	return users, nil
+}
 func (r *UserRepository) UserPasswordGetById(userid int) (entities.User, error) {
 
 	query := `SELECT id, password FROM ` + tableName + ` where id=$1`
