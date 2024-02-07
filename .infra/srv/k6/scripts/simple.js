@@ -1,7 +1,7 @@
 import http from "k6/http";
 
 export const options = {
-    iterations: 10,
+    iterations: 1,
 };
 const params = {
     headers: {
