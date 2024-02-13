@@ -16,4 +16,4 @@ srv-psql:
 srv-k6:
 	cd ../srv/k6;docker-compose -p $(PROJECT)-hl-test up
 srv-prom:
-	cd ../srv/prometheus;docker-compose -p $(PROJECT)-hl up
+	cd ../srv/prometheus;docker-compose -p $(PROJECT)-hl-prom up

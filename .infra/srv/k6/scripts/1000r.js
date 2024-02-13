@@ -9,7 +9,7 @@ const params = {
 
 
 export default function () {
-    const countRequest = 1
+    const countRequest = 1000
     let request = []
 
     for (let req = 0; req < countRequest; req++) {

@@ -13,17 +13,17 @@ services:
     networks:
       - service-network    
   grafana:
-    image: grafana/grafana:latest
+    image: grafana/grafana:9.3.8
     links:
       - prometheus:prometheus
     volumes:
       - ./data:/var/lib/grafana
     environment:
-      - GF_SECURITY_ADMIN_USER=login # nen логин для входа
-      - GF_SECURITY_ADMIN_PASSWORD=pass #тут значения пароля для входа 
-      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_BASIC_ENABLED=false
     ports:
-      - 3000:3000
+      - 3001:3000
     user: "${UID}:${GID}"  
     networks:
       - service-network

@@ -10,6 +10,7 @@ import (
 	"github.com/avp365/hl-sn/internal/pkg/token"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
+	"github.com/penglongli/gin-metrics/ginmetrics"
 )
 
 func Version(c *gin.Context) {
@@ -139,9 +140,21 @@ func Run() {
 
 	router := gin.Default()
 
+	// get global Monitor object
+	m := ginmetrics.GetMonitor()
+
+	// +optional set metric path, default /debug/metrics
+	m.SetMetricPath("/metrics")
+	// +optional set slow time, default 5s
+	m.SetSlowTime(10)
+	// +optional set request duration, default {0.1, 0.3, 1.2, 5, 10}
+	// used to p95, p99
+	m.SetDuration([]float64{0.1, 0.3, 1.2, 5, 10})
+	m.Use(router)
+
 	router.GET("/", Version)
 	router.GET("/user/get/:userid", jwtMiddleware(), UserGetById)
-	router.GET("/user/search/", jwtMiddleware(), UserSearch)
+	router.GET("/user/search", jwtMiddleware(), UserSearch)
 	router.POST("/user/register", UserRegister)
 	router.POST("/login", Login)
 

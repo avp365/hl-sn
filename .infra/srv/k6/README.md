@@ -7,3 +7,4 @@ curl --location 'http://social-net:8080/user/search?first_name=%D0%98&second_nam
 
 # тестирование
 docker-compose run k6 run /scripts/simple.js
+docker-compose run k6 run /scripts/1r.js
