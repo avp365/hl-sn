@@ -1,5 +1,6 @@
 # Отчет по тестироваиню запроса /user/search?first_name=И&second_name=Брагина без индексов и с индексами.
 Используем k6. Скрпиты находятся в "корень проекта/.infra/srv/k6/scripts"
+Генерация https://github.com/avp365/hl-sn/blob/main/tools/generator/main.go , в 10 csv файлов, который загружкаются с помощью .infra/srv/psql/docker-compose.yml   pgadmin
 ## Тестирование до введения индекса
 ### Параметры тестирования
 #### 1 запрос
