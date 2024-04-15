@@ -9,9 +9,9 @@ import (
 func main() {
 
 	mg := connect.NewManager()
-	mg.InitDBPostr()
+	mg.Init()
 
-	repositories.InitUserRepository(mg.Conn.DBPostr)
+	repositories.InitUserRepository(mg.Conn.DBPostr, mg.Conn.DBPostrS1)
 
 	router.Run()
 

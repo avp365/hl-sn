@@ -9,7 +9,7 @@ const params = {
 
 
 export default function () {
-    const countRequest = 100
+    const countRequest = 500
     let request = []
 
     for (let req = 0; req < countRequest; req++) {
@@ -20,6 +20,13 @@ export default function () {
         });
     }
 
+    for (let req = 0; req < countRequest; req++) {
+        request.push({
+            method: 'GET',
+            url: 'http://social-net:8080/user/get/1278',
+            params: params
+        });
+    }
 
     const responses = http.batch(request);
 

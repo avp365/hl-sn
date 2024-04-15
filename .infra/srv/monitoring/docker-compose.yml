@@ -1,0 +1,42 @@
+version: '3.2'
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    hostname: "prometheus" 
+    ports:
+    - 9090:9090
+    command:
+    - --config.file=/etc/prometheus/prometheus.yml
+    volumes:
+    - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    networks:
+      - service-network 
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.49.1
+    container_name: cadvisor
+    hostname: "cadvisor" 
+    command:
+    - '-port=9092'
+    ports:
+    - 9092:9092
+    environment:
+      - CADVISOR_HEALTHCHECK_URL=http://localhost:9092/healthz
+    volumes:
+    - /:/rootfs:ro
+    - /var/run:/var/run:rw
+    - /sys:/sys:ro
+    - /var/lib/docker/:/var/lib/docker:ro
+    networks:
+      - service-network    
+    depends_on:
+    - redis
+  redis:
+    image: redis:7.2.4
+    container_name: redis
+    ports:
+    - 6379:6379         
+networks:
+ service-network:
+   name: dev
+   driver: bridge

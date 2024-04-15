@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  postgres-s2:
+    container_name: postgres_s2
+    image: postgres:16.1
+    shm_size: 1g
+    hostname: postgres-16-1-s2
+    environment:
+      #POSTGRES_DB: "socnet"
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-123456}
+      PGDATA: /data/postgres
+    volumes:
+       - ./postgres:/data/postgres     
+       - ./pg_hba.conf:/data/postgres/pg_hba.conf
+       - ./postgresql.conf:/data/postgres/postgresql.conf  
+    ports:
+      - "5432"
+    networks:
+      - service-network
+    restart: unless-stopped      
+networks:
+ service-network:
+   name: dev
+   driver: bridge
+

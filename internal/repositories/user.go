@@ -14,11 +14,12 @@ var UsrRep UserRepository
 var tableName = "users"
 
 type UserRepository struct {
-	DBPostr *pgxpool.Pool
+	DBPostr   *pgxpool.Pool
+	DBPostrS1 *pgxpool.Pool
 }
 
-func InitUserRepository(db *pgxpool.Pool) error {
-	UsrRep = UserRepository{db}
+func InitUserRepository(dbMaster *pgxpool.Pool, dbs1 *pgxpool.Pool) error {
+	UsrRep = UserRepository{dbMaster, dbs1}
 
 	return nil
 }
@@ -50,7 +51,7 @@ func (r *UserRepository) UserGetById(userid int) (entities.User, error) {
 	query := `SELECT id, first_name, second_name, birthdate, biography, city FROM ` + tableName + ` where id=$1`
 
 	var user entities.User
-	err := r.DBPostr.QueryRow(context.Background(), query, userid).Scan(&user.ID, &user.FirstName, &user.SecondName, &user.Birthdate, &user.Biography, &user.City)
+	err := r.DBPostrS1.QueryRow(context.Background(), query, userid).Scan(&user.ID, &user.FirstName, &user.SecondName, &user.Birthdate, &user.Biography, &user.City)
 
 	if err != nil {
 		log.Printf("db error: %v\n", err)
@@ -63,7 +64,7 @@ func (r *UserRepository) UserSearch(firstName string, lastName string) ([]entiti
 
 	query := `SELECT id, first_name, second_name, birthdate, biography, city FROM ` + tableName + ` where first_name LIKE $1 AND second_name LIKE $2 ORDER BY id`
 
-	rows, err := r.DBPostr.Query(context.Background(), query, firstName+"%", lastName+"%")
+	rows, err := r.DBPostrS1.Query(context.Background(), query, firstName+"%", lastName+"%")
 	if err != nil {
 		log.Printf("db error Query: %v\n", err)
 		return []entities.User{}, err

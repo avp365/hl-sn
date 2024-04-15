@@ -1,0 +1,5 @@
+/pgadmin/pgadmin/*
+/pgadmin/data/*
+/master/postgres
+/s1/postgres
+/s2/postgres
