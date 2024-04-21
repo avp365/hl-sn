@@ -9,6 +9,8 @@ up:
 	docker-compose -p $(PROJECT) up
 down:
 	docker-compose -p $(PROJECT) down
+tools-hl_to_table_postgres:
+	docker exec -it $(PROJECT)_app_1 bash -c "go run ./tools/hl_to_table_postgres/main.go"		
 docker_stats:
 	docker stats $(PROJECT)
 srv-psql-master:

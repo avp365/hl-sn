@@ -73,19 +73,76 @@ exit;
 
 # Настройка синхронной репликации.
 
-## Настраиваем параметры репликации для слейва:
-docker exec -it postgres_container_s1 bash
-rm -R /data/postgres/*
-su - postgres -c "pg_basebackup --host=postgres-16-1 --username=repluser --pgdata=/data/postgres --wal-method=stream --write-recovery-conf"
+## Включаем синхронную репликацию на postgres_master
 
-docker exec -it postgres_container_s2 bash
-rm -R /data/postgres/*
-su - postgres -c "pg_basebackup --host=postgres-16-1 --username=repluser --pgdata=/data/postgres --wal-method=stream --write-recovery-conf"
+Меняем файл pgmaster/postgresql.conf
+<br>synchronous_commit = on
+<br>synchronous_standby_names = 'FIRST 1 (pgslave, pgasyncslave)'
+
+<br>Перечитываем конфиг
+<br>docker exec -it postgres_master su - postgres -c psql 
+<br>select pg_reload_conf();
+<br>exit;
 
 ## Проверяем:
-Master
-docker exec -it postgres_container su - postgres -c "psql -c 'select * from pg_stat_replication;'"
-Slave 1
-docker exec -it postgres_container_s1 su - postgres -c "psql -c 'select * from pg_stat_replication;'"
-Slave 2
-docker exec -it postgres_container_s2 su - postgres -c "psql -c 'select * from pg_stat_replication;'"
+<br>docker exec -it postgres_master su - postgres -c psql
+<br>select application_name, sync_state from pg_stat_replication;
+<br>exit;
+
+![](sync_replica.png)
+
+## Создаем тестовую таблицу:
+<br>docker exec -it postgres_master su - postgres -c psql
+<br>create table test(id serial primary key,text text);
+<br>insert into test(text) values('test');
+<br>select * from test;
+<br>exit;
+
+## Проверим наличие данных на s1
+<br>docker exec -it postgres_s1 su - postgres -c psql
+<br>select * from test;
+<br>exit;
+
+## Проверим наличие данных на s2
+<br>docker exec -it postgres_s1 su - postgres -c psql
+<br>select * from test;
+<br>exit
+
+## Используем tools`у для нагрузочного тестирования с помощью вставки запроса
+<br>./tools/hl_to_table_postgres/main.go 26 строка.
+Обойдемся одной горутиной и  100000 вставками
+
+## Убиваем контейнер с postgres
+docker kill --signal=9 postgres_master
+
+## Проверяем:
+<br> Смотрим успешные строки: 652177
+![](hl_id_last_records.png)
+
+
+## Сравниваем master, s1 и s2 
+<br> Потерь транзакций не наблюдаем.
+![](s1_after_hl.png)
+![](s2_after_hl.png)
+![](master_after_hl.png)
+
+
+## Запромоутим реплику s1
+<br>docker exec -it postgres_s1 su - postgres -c psql
+<br>select pg_promote();
+<br>exit;
+<br>изменяем конфиг
+synchronous_commit = on
+synchronous_standby_names = 'ANY 1 (pgmaster, pgasyncslave)'
+<br>перечитываем конфиг
+<br>docker exec -it postgres_s1 su - postgres -c psql
+<br>select pg_reload_conf();
+<br>exit;
+
+## Подключим вторую реплику postgres_s2 к новому мастеру postgres_s1
+изменяем конфиг /home/dev/go/src/github.com/avp365/hl-sn/.infra/srv/psql/s2/postgresql.conf 
+primary_conninfo = 'host=postgres-16-1-s1 port=5432 user=replicator password=pass application_name=s2'
+<br>перечитываем конфиг
+<br>docker exec -it postgres_s2 su - postgres -c psql
+<br>select pg_reload_conf();
+<br>exit;
