@@ -21,7 +21,6 @@ export default function () {
     }
 
 
-
     const responses = http.batch(request);
 
     // httpbin.test.k6.io should return our POST data in the response body, so

@@ -1,6 +1,6 @@
 # Отчет по тестированию запроса /user/search?first_name=И&second_name=Брагина без индексов и с индексами.
 Используем k6. Скрпиты находятся в https://github.com/avp365/hl-sn/tree/main/.infra/srv/k6/scripts
-Генерация https://github.com/avp365/hl-sn/blob/main/tools/generator/main.go , в 10 csv файлов, который загружкаются с помощью .infra/srv/psql/docker-compose.yml   pgadmin
+Генерация https://github.com/avp365/hl-sn/blob/main/tools/generator/main.go , в 10 csv файлов, который загружаются с помощью .infra/srv/psql/docker-compose.yml   pgadmin
 ## Тестирование до введения индекса
 ### Параметры тестирования
 #### 1 запрос
@@ -14,7 +14,7 @@
 
 #### График "Производительность"
 ![](perfomance.png)
-#### график "Общий"
+#### График "Общий"
 ![](result.png)
 
 ###  Анализ.
@@ -34,7 +34,7 @@
 
 #### График "Производительность"
 ![](perfomance.png)
-#### график "Общий"
+#### График "Общий"
 ![](result.png)
 
 Из данных r1.png и т.д. а так же графиков поулучаем, что минимальный http_req_duration (latency) 33.53 ms при 1 запросе и 11.32ms при 1000 запросах. Делаем вывод, что чем больше запросов, тем задержка уменьшается,  с 1 до 10 в 2 раза (примерно на 10ms) и с 10 до 1000 (примерно 10ms). Максимальная пропускная способность 500
