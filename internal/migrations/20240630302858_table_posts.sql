@@ -1,18 +1,15 @@
 -- +goose Up
-CREATE TABLE users (
+CREATE TABLE posts (
     id SERIAL PRIMARY KEY,
-    first_name text,
-    second_name text,
-    birthdate date,
-    biography text,
-    city text,
-    password text
+    user_id integer NOT NULL,
+    text text,
+    date timestamp
 );
 
 -- +goose StatementBegin
 -- +goose StatementEnd
 
 -- +goose Down
-DROP TABLE users;
+DROP TABLE posts
 -- +goose StatementBegin
 -- +goose StatementEnd

@@ -30,7 +30,7 @@ func main() {
 
 			defer wg.Done()
 
-			f, err := os.Create("../../.infra/srv/psql/data/users-" + strconv.Itoa(g) + ".txt")
+			f, err := os.Create("../../../.infra/srv/psql/pgadmin/data/users-" + strconv.Itoa(g) + ".csv")
 			if err != nil {
 				log.Fatal(err)
 			}

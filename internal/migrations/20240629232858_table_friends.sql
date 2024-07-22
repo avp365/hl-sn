@@ -1,18 +1,15 @@
 -- +goose Up
-CREATE TABLE users (
+CREATE TABLE friends (
     id SERIAL PRIMARY KEY,
-    first_name text,
-    second_name text,
-    birthdate date,
-    biography text,
-    city text,
-    password text
+    id_user_1 integer NOT NULL,
+    id_user_2 integer NOT NULL,
+    date_add timestamp
 );
 
 -- +goose StatementBegin
 -- +goose StatementEnd
 
 -- +goose Down
-DROP TABLE users;
+DROP TABLE friends;
 -- +goose StatementBegin
 -- +goose StatementEnd

@@ -27,3 +27,5 @@ srv-monitoring:
 	cd ../srv/monitoring;docker-compose -p $(PROJECT)-hl-mon up
 srv-grafana:
 	cd ../srv/grafana;docker-compose -p $(PROJECT)-hl-grafana up	
+srv-redis:
+	cd ../srv/redis;docker-compose -p $(PROJECT)-hl-redis up		

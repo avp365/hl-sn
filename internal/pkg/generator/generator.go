@@ -10,12 +10,12 @@ import (
 
 func GenerateRndUser() entities.User {
 	user := entities.User{}
-	firstName, secondName := generateRndName(randInt(0, 2))
+	firstName, secondName := generateRndName(RandInt(0, 2))
 
 	user.FirstName = firstName
 	user.SecondName = secondName
-	user.Birthdate = generateRndDate(1940, 2008)
-	user.Biography = generateBio(randInt(0, 3))
+	user.Birthdate = GenerateRndDate(1940, 2008)
+	user.Biography = GenerateBio(RandInt(0, 3))
 	user.City = rufaker.GenerateCity()
 	user.Password = "Password123456"
 
@@ -32,7 +32,7 @@ func generateRndName(isMen int) (string, string) {
 	return rufaker.FirstNameFemale(), rufaker.LastNameFemale()
 }
 
-func generateRndDate(startYear int, endYear int) time.Time {
+func GenerateRndDate(startYear int, endYear int) time.Time {
 	min := time.Date(startYear, 1, 0, 0, 0, 0, 0, time.UTC).Unix()
 	max := time.Date(endYear, 1, 0, 0, 0, 0, 0, time.UTC).Unix()
 	delta := max - min
@@ -41,7 +41,7 @@ func generateRndDate(startYear int, endYear int) time.Time {
 	return time.Unix(sec, 0)
 }
 
-func generateBio(number int) string {
+func GenerateBio(number int) string {
 	b := make(map[int]string)
 
 	b[0] = "А .... моя биография 1. моя биография 1. моя биография 1. моя биография 1. моя биография 1. моя биография 1. моя биография 1.моя биография 1. моя биография 1.моя биография 1. моя биография 1, моя биография 1. моя биография 1. моя биография 1. моя биография 1"
@@ -50,7 +50,15 @@ func generateBio(number int) string {
 
 	return b[number]
 }
-
-func randInt(min int, max int) int {
+func GenerateText(n int) string {
+	var charset = []byte("abc def ghi jkl mno pqr stu vwx yz")
+	b := make([]byte, n)
+	for i := range b {
+		// randomly select 1 character from given charset
+		b[i] = charset[rand.Intn(len(charset))]
+	}
+	return string(b)
+}
+func RandInt(min int, max int) int {
 	return min + rand.Intn(max-min)
 }

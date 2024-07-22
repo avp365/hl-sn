@@ -12,6 +12,7 @@ func main() {
 	mg.Init()
 
 	repositories.InitUserRepository(mg.Conn.DBPostr, mg.Conn.DBPostrS1)
+	repositories.InitPostRepository(mg.Conn.DBPostr, mg.Conn.DBPostrS1)
 
 	router.Run()
 
