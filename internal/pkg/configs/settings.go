@@ -19,3 +19,7 @@ func GetDBPostgrS1Settings() DBPostr {
 func GetTokenSecretKey() string {
 	return env.GetEnv("TOKEN_SECRET_KEY", "")
 }
+
+func GetRedisUrl() string {
+	return env.GetEnv("REDIS_URL", "")
+}

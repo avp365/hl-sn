@@ -1,23 +1,47 @@
 package router
 
 import (
+	"encoding/json"
+	"fmt"
 	"net/http"
 
+	"github.com/avp365/hl-sn/internal/entities"
 	"github.com/avp365/hl-sn/internal/pkg/token"
 	"github.com/gin-gonic/gin"
-	"github.com/go-redis/redis"
 	"github.com/golang-jwt/jwt"
 	"github.com/penglongli/gin-metrics/ginmetrics"
 )
-
-var cache = redis.NewClient(&redis.Options{
-	Addr: "localhost:6379",
-})
 
 func Version(c *gin.Context) {
 
 	res := []string{"v:1"}
 	c.JSON(200, res)
+
+}
+func verifyCache() gin.HandlerFunc {
+
+	return func(c *gin.Context) {
+
+		userId := c.Param("id")
+
+		postsData, err := cache.Get(userId).Bytes()
+
+		if err != nil {
+			c.Next()
+		}
+
+		var posts []entities.Post
+		err = json.Unmarshal(postsData, &posts)
+
+		fmt.Println(err)
+		if err != nil {
+			c.Next()
+		}
+
+		c.Abort()
+		c.JSON(http.StatusOK, posts)
+
+	}
 
 }
 
@@ -84,7 +108,7 @@ func Run() {
 	router.POST("/post/delete/:postid", jwtMiddleware(), PostDelete)
 	router.POST("/post/update", jwtMiddleware(), PostUpdate)
 	router.POST("/post/get/:postid", jwtMiddleware(), PostGet)
-	router.POST("/post/feed", jwtMiddleware(), PostFeed)
+	router.POST("/post/feed", jwtMiddleware(), verifyCache(), PostFeed)
 
 	router.POST("/login", Login)
 

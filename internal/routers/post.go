@@ -1,6 +1,7 @@
 package router
 
 import (
+	"encoding/json"
 	"net/http"
 	"strconv"
 	"time"
@@ -118,19 +119,32 @@ func PostGet(c *gin.Context) {
 }
 
 func PostFeed(c *gin.Context) {
-	userId, err := strconv.Atoi(c.Param("id"))
+	userIdParam := c.Param("id")
+	userId, err := strconv.Atoi(userIdParam)
 
 	if err != nil {
 		c.String(http.StatusInternalServerError, "Ошибка сервера: %v", err)
-		return
 	}
 
 	posts, err := post.Feed(userId)
 
 	if err != nil {
 		c.String(http.StatusInternalServerError, "Ошибка сервера: %v", err)
-		return
+
 	}
+
+	data, errJson := json.Marshal(posts)
+	if errJson != nil {
+		c.String(http.StatusInternalServerError, "Ошибка сервера: %v", errJson)
+
+	}
+	cacheErr := cache.Set(userIdParam, data, 0).Err()
+
+	if cacheErr != nil {
+		c.String(http.StatusInternalServerError, "Ошибка сервера: %v", cacheErr)
+
+	}
+
 	c.JSON(http.StatusOK, posts)
 
 }
