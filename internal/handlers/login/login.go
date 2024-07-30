@@ -2,6 +2,7 @@ package login
 
 import (
 	"errors"
+	"strconv"
 	"time"
 
 	"github.com/avp365/hl-sn/internal/entities"
@@ -21,7 +22,7 @@ func LoginHandler(form *entities.LoginForm) (string, error) {
 
 	if password.CheckPasswordHash(form.Password, user.Password) {
 		token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-			"id":  form.ID,
+			"id":  strconv.Itoa(form.ID),
 			"nbf": time.Date(2024, 01, 01, 12, 0, 0, 0, time.UTC).Unix(),
 		})
 

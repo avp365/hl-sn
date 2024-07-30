@@ -13,6 +13,6 @@ CREATE TABLE users (
 -- +goose StatementEnd
 
 -- +goose Down
-DROP TABLE post;
+DROP TABLE users;
 -- +goose StatementBegin
 -- +goose StatementEnd

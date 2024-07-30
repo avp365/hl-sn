@@ -11,7 +11,7 @@ import (
 )
 
 var UsrRep UserRepository
-var tableName = "users"
+var tableNameUsers = "users"
 
 type UserRepository struct {
 	DBPostr   *pgxpool.Pool
@@ -26,7 +26,7 @@ func InitUserRepository(dbMaster *pgxpool.Pool, dbs1 *pgxpool.Pool) error {
 func (r *UserRepository) CreateUser(user entities.User) (int, error) {
 	password, _ := password.HashPassword(user.Password)
 
-	query := `INSERT INTO ` + tableName + ` (first_name, second_name, birthdate, biography, city, password) VALUES (@FirstName, @SecondName, @Birthdate, @Biography, @City, @Password) returning (id)`
+	query := `INSERT INTO ` + tableNameUsers + ` (first_name, second_name, birthdate, biography, city, password) VALUES (@FirstName, @SecondName, @Birthdate, @Biography, @City, @Password) returning (id)`
 
 	args := pgx.NamedArgs{
 		"FirstName":  user.FirstName,
@@ -48,7 +48,7 @@ func (r *UserRepository) CreateUser(user entities.User) (int, error) {
 }
 func (r *UserRepository) UserGetById(userid int) (entities.User, error) {
 
-	query := `SELECT id, first_name, second_name, birthdate, biography, city FROM ` + tableName + ` where id=$1`
+	query := `SELECT id, first_name, second_name, birthdate, biography, city FROM ` + tableNameUsers + ` where id=$1`
 
 	var user entities.User
 	err := r.DBPostrS1.QueryRow(context.Background(), query, userid).Scan(&user.ID, &user.FirstName, &user.SecondName, &user.Birthdate, &user.Biography, &user.City)
@@ -62,7 +62,7 @@ func (r *UserRepository) UserGetById(userid int) (entities.User, error) {
 }
 func (r *UserRepository) UserSearch(firstName string, lastName string) ([]entities.User, error) {
 
-	query := `SELECT id, first_name, second_name, birthdate, biography, city FROM ` + tableName + ` where first_name LIKE $1 AND second_name LIKE $2 ORDER BY id`
+	query := `SELECT id, first_name, second_name, birthdate, biography, city FROM ` + tableNameUsers + ` where first_name LIKE $1 AND second_name LIKE $2 ORDER BY id`
 
 	rows, err := r.DBPostrS1.Query(context.Background(), query, firstName+"%", lastName+"%")
 	if err != nil {
@@ -81,7 +81,7 @@ func (r *UserRepository) UserSearch(firstName string, lastName string) ([]entiti
 }
 func (r *UserRepository) UserPasswordGetById(userid int) (entities.User, error) {
 
-	query := `SELECT id, password FROM ` + tableName + ` where id=$1`
+	query := `SELECT id, password FROM ` + tableNameUsers + ` where id=$1`
 
 	var user entities.User
 	err := r.DBPostr.QueryRow(context.Background(), query, userid).Scan(&user.ID, &user.Password)

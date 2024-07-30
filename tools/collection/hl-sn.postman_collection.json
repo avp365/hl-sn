@@ -7,6 +7,269 @@
 	},
 	"item": [
 		{
+			"name": "post",
+			"item": [
+				{
+					"name": "post create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyNzgiLCJuYmYiOjE3MDQxMTA0MDB9.68l23VLx5rvxcr1dRBc6sBw9W2U17hHx2W18wiJ6HTA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"text\" :\"ssdsd\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_HL_SRV}}/post/create",
+							"host": [
+								"{{URL_HL_SRV}}"
+							],
+							"path": [
+								"post",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyNzgiLCJuYmYiOjE3MDQxMTA0MDB9.68l23VLx5rvxcr1dRBc6sBw9W2U17hHx2W18wiJ6HTA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"post_id\" : \"22\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_HL_SRV}}/post/delete/22",
+							"host": [
+								"{{URL_HL_SRV}}"
+							],
+							"path": [
+								"post",
+								"delete",
+								"22"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyNzgiLCJuYmYiOjE3MDQxMTA0MDB9.68l23VLx5rvxcr1dRBc6sBw9W2U17hHx2W18wiJ6HTA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"text\" :\"data update\",\r\n    \"post_id\" :33\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_HL_SRV}}/post/update",
+							"host": [
+								"{{URL_HL_SRV}}"
+							],
+							"path": [
+								"post",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post get",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyNzgiLCJuYmYiOjE3MDQxMTA0MDB9.68l23VLx5rvxcr1dRBc6sBw9W2U17hHx2W18wiJ6HTA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"text\" :\"data update\",\r\n    \"post_id\" :33\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_HL_SRV}}/post/get/33",
+							"host": [
+								"{{URL_HL_SRV}}"
+							],
+							"path": [
+								"post",
+								"get",
+								"33"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "feed",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE0NTYiLCJuYmYiOjE3MDQxMTA0MDB9.sgSE8wqKHfvWv9DE3A6-3KxzmwpRcrAeo216di_pMD4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"text\" :\"data update\",\r\n    \"post_id\" :33\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_HL_SRV}}/post/feed",
+							"host": [
+								"{{URL_HL_SRV}}"
+							],
+							"path": [
+								"post",
+								"feed"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "friend",
+			"item": [
+				{
+					"name": "friend set",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyNzgiLCJuYmYiOjE3MDQxMTA0MDB9.68l23VLx5rvxcr1dRBc6sBw9W2U17hHx2W18wiJ6HTA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL_HL_SRV}}/friend/set/2211",
+							"host": [
+								"{{URL_HL_SRV}}"
+							],
+							"path": [
+								"friend",
+								"set",
+								"2211"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "friend delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyNzgiLCJuYmYiOjE3MDQxMTA0MDB9.68l23VLx5rvxcr1dRBc6sBw9W2U17hHx2W18wiJ6HTA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL_HL_SRV}}/friend/delete/2211",
+							"host": [
+								"{{URL_HL_SRV}}"
+							],
+							"path": [
+								"friend",
+								"delete",
+								"2211"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "ver.",
 			"request": {
 				"method": "GET",
@@ -88,7 +351,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwibmJmIjoxNzA0MTEwNDAwfQ.PrvceVa5J3Ii0VLwa8HbamogtSqK1Ahc_tYR1FMS_-o",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTI3OCwibmJmIjoxNzA0MTEwNDAwfQ.GP6RzCN4Z1bf_G3E_G2CsnA3QD4iq1YDLSvmVl7VySU",
 							"type": "string"
 						}
 					]
@@ -100,14 +363,93 @@
 					"formdata": []
 				},
 				"url": {
-					"raw": "{{URL_HL_SRV}}/user/get/9",
+					"raw": "{{URL_HL_SRV}}/user/get/1278",
 					"host": [
 						"{{URL_HL_SRV}}"
 					],
 					"path": [
 						"user",
 						"get",
-						"9"
+						"1278"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTI3OCwibmJmIjoxNzA0MTEwNDAwfQ.GP6RzCN4Z1bf_G3E_G2CsnA3QD4iq1YDLSvmVl7VySU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{URL_HL_SRV}}/user/search?first_name=И&second_name=Брагин",
+					"host": [
+						"{{URL_HL_SRV}}"
+					],
+					"path": [
+						"user",
+						"search"
+					],
+					"query": [
+						{
+							"key": "first_name",
+							"value": "И"
+						},
+						{
+							"key": "second_name",
+							"value": "Брагин"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "metrics",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTI3OCwibmJmIjoxNzA0MTEwNDAwfQ.GP6RzCN4Z1bf_G3E_G2CsnA3QD4iq1YDLSvmVl7VySU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{URL_HL_SRV}}/metrics",
+					"host": [
+						"{{URL_HL_SRV}}"
+					],
+					"path": [
+						"metrics"
 					]
 				}
 			},
@@ -123,7 +465,7 @@
 					"formdata": [
 						{
 							"key": "id",
-							"value": "9",
+							"value": "1456",
 							"type": "text"
 						},
 						{

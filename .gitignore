@@ -1,3 +1,4 @@
 !.gitkeep
 .infra/dev/.container/*
 .infra/srv/prometheus/data*
+.infra/srv/redis/data*

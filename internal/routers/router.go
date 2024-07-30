@@ -1,12 +1,11 @@
 package router
 
 import (
+	"encoding/json"
+	"fmt"
 	"net/http"
-	"strconv"
 
 	"github.com/avp365/hl-sn/internal/entities"
-	"github.com/avp365/hl-sn/internal/handlers/login"
-	"github.com/avp365/hl-sn/internal/handlers/user"
 	"github.com/avp365/hl-sn/internal/pkg/token"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
@@ -19,92 +18,33 @@ func Version(c *gin.Context) {
 	c.JSON(200, res)
 
 }
+func verifyCache() gin.HandlerFunc {
 
-func Login(c *gin.Context) {
-	var loginForm entities.LoginForm
+	return func(c *gin.Context) {
 
-	if err := c.ShouldBind(&loginForm); err != nil {
-		c.String(http.StatusBadRequest, "bad request: %v", err)
-		return
+		userId := c.Param("id")
+
+		postsData, err := cache.Get(userId).Bytes()
+
+		if err != nil {
+			c.Next()
+		}
+
+		var posts []entities.Post
+		err = json.Unmarshal(postsData, &posts)
+
+		fmt.Println(err)
+		if err != nil {
+			c.Next()
+		}
+
+		c.Abort()
+		c.JSON(http.StatusOK, posts)
+
 	}
-
-	token, err := login.LoginHandler(&loginForm)
-
-	if err != nil {
-		c.String(http.StatusInternalServerError, "Ошибка сервера: %v", err)
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{
-		"token": token,
-	})
 
 }
 
-func UserRegister(c *gin.Context) {
-	var registerForm entities.RegisterForm
-
-	if err := c.ShouldBind(&registerForm); err != nil {
-		c.String(http.StatusBadRequest, "bad request: %v", err)
-		return
-	}
-
-	userId, err := user.RegisterUserHandler(&registerForm)
-
-	if err != nil {
-		c.String(http.StatusInternalServerError, "Ошибка сервера: %v", err)
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{
-		"user_id": userId,
-	})
-
-}
-
-func UserGetById(c *gin.Context) {
-	useridFromParam := c.Param("userid")
-
-	userid, err := strconv.Atoi(useridFromParam)
-
-	if err != nil {
-		c.String(http.StatusInternalServerError, "Ошибка сервера: %v", err)
-		return
-	}
-
-	user, err := user.UserGetByIdHandler(userid)
-
-	if err != nil {
-		c.String(http.StatusInternalServerError, "Ошибка сервера: %v", err)
-		return
-	}
-	c.JSON(http.StatusOK, gin.H{
-		"id":          user.ID,
-		"first_name":  user.FirstName,
-		"second_name": user.SecondName,
-		"birthdate":   user.Birthdate,
-		"biography":   user.Biography,
-		"city":        user.City,
-	})
-
-}
-func UserSearch(c *gin.Context) {
-	var searchForm entities.SearchForm
-
-	if err := c.ShouldBind(&searchForm); err != nil {
-		c.String(http.StatusBadRequest, "bad request: %v", err)
-		return
-	}
-
-	users, err := user.UserSearchHandler(searchForm)
-
-	if err != nil {
-		c.String(http.StatusInternalServerError, "Ошибка сервера: %v", err)
-		return
-	}
-	c.JSON(http.StatusOK, users)
-
-}
 func jwtMiddleware() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
@@ -133,9 +73,14 @@ func jwtMiddleware() gin.HandlerFunc {
 			})
 			return
 		}
+
+		data := token.Claims.(jwt.MapClaims)
+
+		c.Params = append(c.Params, gin.Param{Key: "id", Value: data["id"].(string)})
 		c.Next()
 	}
 }
+
 func Run() {
 
 	router := gin.Default()
@@ -156,6 +101,16 @@ func Run() {
 	router.GET("/user/get/:userid", jwtMiddleware(), UserGetById)
 	router.GET("/user/search", jwtMiddleware(), UserSearch)
 	router.POST("/user/register", UserRegister)
+
+	router.POST("/friend/set/:friendid", jwtMiddleware(), FriendSet)
+	router.POST("/friend/delete/:friendid", jwtMiddleware(), FriendDelete)
+
+	router.POST("/post/create", jwtMiddleware(), PostCreate)
+	router.POST("/post/delete/:postid", jwtMiddleware(), PostDelete)
+	router.POST("/post/update", jwtMiddleware(), PostUpdate)
+	router.POST("/post/get/:postid", jwtMiddleware(), PostGet)
+	router.POST("/post/feed", jwtMiddleware(), verifyCache(), PostFeed)
+
 	router.POST("/login", Login)
 
 	router.Run()
