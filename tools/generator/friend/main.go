@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/avp365/hl-sn/internal/pkg/generator"
+	"github.com/avp365/hl-sn/srv/sn/internal/pkg/generator"
 )
 
 func main() {
