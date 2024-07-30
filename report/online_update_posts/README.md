@@ -1,5 +1,5 @@
 
-# Настройка кеширования. Сервис srv/sn
+# Настройка кеширования.
 ## Создаем набор данных с помощью генераторов.
 ### Генерим список друзей с помощью скрипта. Файл сохранится в формате .csv по пути /home/dev/go/src/github.com/avp365/hl-sn/.infra/srv/psql/pgadmin/data , где будет залит в БД
 [/home/dev/go/src/github.com/avp365/hl-sn/tools/generator/friend/main.go](https://github.com/avp365/hl-sn/blob/cache_queue/srv/sn/tools/generator/friend/main.go)
