@@ -1,11 +1,9 @@
 
 # Настройка кеширование.
 ## Создаем набор данных с помощью генераторов.
-### Генерим список друзей с помощью скрипта. Файл сохранится в формате .csv по пути /home/dev/go/src/github.com/avp365/hl-sn/.infra/srv/psql/pgadmin/data , где
-### потом будет залит в БД
+### Генерим список друзей с помощью скрипта. Файл сохранится в формате .csv по пути /home/dev/go/src/github.com/avp365/hl-sn/.infra/srv/psql/pgadmin/data , где будет залит в БД
 /home/dev/go/src/github.com/avp365/hl-sn/tools/generator/friend/main.go
-### Генерим посты друзей с помощью скрипта, на основе файла friends. Файл сохранится в формате .csv по пути /home/dev/go/src/github.com/avp365/hl-sn/.infra/srv/psql/pgadmin/data , где
-### потом будет залит в БД
+### Генерим посты друзей с помощью скрипта, на основе файла friends. Файл сохранится в формате .csv по пути /home/dev/go/src/github.com/avp365/hl-sn/.infra/srv/psql/pgadmin/data , где будет залит в БД
 /home/dev/go/src/github.com/avp365/hl-sn/tools/generator/posts/main.go
 
 Слудет учесть что механизм добавлений и хранение друзей, а так же подбор является очень простейшим. Например. 

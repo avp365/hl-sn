@@ -3,7 +3,6 @@ package repositories
 import (
 	"context"
 	"errors"
-	"fmt"
 
 	"github.com/avp365/hl-sn/internal/entities"
 	"github.com/jackc/pgx/v5"
@@ -12,6 +11,37 @@ import (
 
 var tableNameFriends = "friends"
 
+func (r *UserRepository) GetFriends(userId int) ([]int, error) {
+
+	query := `SELECT id_user_1, id_user_2 FROM ` + tableNameFriends + ` where id_user_1=$1 or id_user_2=$1`
+
+	rows, err := r.DBPostr.Query(context.Background(), query, userId)
+
+	if err != nil {
+		log.Printf("db error: %v\n", err)
+		return nil, err
+	}
+
+	var friendIds []int
+
+	for rows.Next() {
+
+		var id1, id2 int
+
+		rows.Scan(&id1, &id2)
+
+		if id1 != userId {
+			friendIds = append(friendIds, id1)
+		}
+
+		if id2 != userId {
+			friendIds = append(friendIds, id2)
+		}
+
+	}
+
+	return friendIds, nil
+}
 func (r *UserRepository) friendSetCheck(friendSet entities.FriendSet) (int, error) {
 
 	query := `SELECT id FROM ` + tableNameFriends + ` where id_user_1=$1 and id_user_2=$2 or id_user_1=$2 and id_user_2=$1`
@@ -49,8 +79,6 @@ func (r *UserRepository) FriendSet(friendSet entities.FriendSet) (int, error) {
 		"IdUser2": friendSet.IdUser2,
 		"DateAdd": friendSet.DateAdd,
 	}
-
-	fmt.Println(args)
 
 	err = r.DBPostr.QueryRow(context.Background(), query, args).Scan(&setId)
 

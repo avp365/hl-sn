@@ -1,7 +1,7 @@
 package router
 
 import (
-	"encoding/json"
+	"log"
 	"net/http"
 	"strconv"
 	"time"
@@ -36,6 +36,13 @@ func PostCreate(c *gin.Context) {
 		c.String(http.StatusInternalServerError, "Ошибка сервера: %v", err)
 		return
 	}
+
+	err = queue.LPush(queueName, strconv.Itoa(userId)).Err()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	c.JSON(http.StatusOK, post)
 
 }
@@ -119,29 +126,19 @@ func PostGet(c *gin.Context) {
 }
 
 func PostFeed(c *gin.Context) {
+
 	userIdParam := c.Param("id")
+
 	userId, err := strconv.Atoi(userIdParam)
 
 	if err != nil {
 		c.String(http.StatusInternalServerError, "Ошибка сервера: %v", err)
 	}
 
-	posts, err := post.Feed(userId)
+	posts, err := feedCache(userId)
 
 	if err != nil {
 		c.String(http.StatusInternalServerError, "Ошибка сервера: %v", err)
-
-	}
-
-	data, errJson := json.Marshal(posts)
-	if errJson != nil {
-		c.String(http.StatusInternalServerError, "Ошибка сервера: %v", errJson)
-
-	}
-	cacheErr := cache.Set(userIdParam, data, 0).Err()
-
-	if cacheErr != nil {
-		c.String(http.StatusInternalServerError, "Ошибка сервера: %v", cacheErr)
 
 	}
 

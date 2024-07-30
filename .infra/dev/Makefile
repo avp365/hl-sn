@@ -1,6 +1,8 @@
 export PROJECT := socnet
 go-run:
 	docker exec -it $(PROJECT)_app_1 bash -c "go run ./cmd/app/main.go"
+go-cl:	
+	docker exec -it $(PROJECT)_app_1 bash -c "go run ./cmd/cl/main.go"
 go-build:
 	docker exec -it $(PROJECT) bash -c "go build -o /go/bin/app ./cmd/app/main.go" ;docker-compose -f docker-compose.yml -f docker-compose-add.yml -p $(PROJECT) up
 migr:

@@ -80,6 +80,7 @@ func jwtMiddleware() gin.HandlerFunc {
 		c.Next()
 	}
 }
+
 func Run() {
 
 	router := gin.Default()

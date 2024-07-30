@@ -28,6 +28,10 @@ func UserSearchHandler(searchForm entities.SearchForm) ([]entities.User, error) 
 	return repositories.UsrRep.UserSearch(searchForm.FirstName, searchForm.SecondName)
 }
 
+func GetFriends(userId int) ([]int, error) {
+	return repositories.UsrRep.GetFriends(userId)
+}
+
 func FriendSet(userId, frienduserId int) (int, error) {
 	return repositories.UsrRep.FriendSet(entities.FriendSet{IdUser1: userId, IdUser2: frienduserId, DateAdd: time.Now()})
 }
