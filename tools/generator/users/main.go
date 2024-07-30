@@ -9,8 +9,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/avp365/hl-sn/internal/pkg/generator"
-	"github.com/avp365/hl-sn/internal/pkg/password"
+	"github.com/avp365/hl-sn/srv/sn/internal/pkg/generator"
+	"github.com/avp365/hl-sn/srv/sn/internal/pkg/password"
 )
 
 func main() {
