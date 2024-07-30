@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/avp365/hl-sn/internal/pkg/connect"
-	"github.com/avp365/hl-sn/internal/repositories"
-	router "github.com/avp365/hl-sn/internal/routers"
+	"github.com/avp365/hl-sn/srv/sn/internal/pkg/connect"
+	"github.com/avp365/hl-sn/srv/sn/internal/repositories"
+	router "github.com/avp365/hl-sn/srv/sn/internal/routers"
 )
 
 func main() {

@@ -3,8 +3,8 @@ package router
 import (
 	"net/http"
 
-	"github.com/avp365/hl-sn/internal/entities"
-	"github.com/avp365/hl-sn/internal/handlers/login"
+	"github.com/avp365/hl-sn/srv/sn/internal/entities"
+	"github.com/avp365/hl-sn/srv/sn/internal/handlers/login"
 	"github.com/gin-gonic/gin"
 )
 

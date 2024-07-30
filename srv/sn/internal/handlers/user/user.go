@@ -3,8 +3,8 @@ package user
 import (
 	"time"
 
-	"github.com/avp365/hl-sn/internal/entities"
-	"github.com/avp365/hl-sn/internal/repositories"
+	"github.com/avp365/hl-sn/srv/sn/internal/entities"
+	"github.com/avp365/hl-sn/srv/sn/internal/repositories"
 )
 
 func RegisterUserHandler(form *entities.RegisterForm) (int, error) {

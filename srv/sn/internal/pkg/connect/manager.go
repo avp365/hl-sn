@@ -3,7 +3,7 @@ package connect
 import (
 	"context"
 
-	"github.com/avp365/hl-sn/internal/pkg/configs"
+	"github.com/avp365/hl-sn/srv/sn/internal/pkg/configs"
 	"github.com/jackc/pgx/v5/pgxpool"
 	log "github.com/sirupsen/logrus"
 )

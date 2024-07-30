@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/avp365/hl-sn/internal/entities"
-	"github.com/avp365/hl-sn/internal/pkg/token"
+	"github.com/avp365/hl-sn/srv/sn/internal/entities"
+	"github.com/avp365/hl-sn/srv/sn/internal/pkg/token"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
 	"github.com/penglongli/gin-metrics/ginmetrics"

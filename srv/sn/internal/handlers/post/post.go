@@ -1,8 +1,8 @@
 package post
 
 import (
-	"github.com/avp365/hl-sn/internal/entities"
-	"github.com/avp365/hl-sn/internal/repositories"
+	"github.com/avp365/hl-sn/srv/sn/internal/entities"
+	"github.com/avp365/hl-sn/srv/sn/internal/repositories"
 )
 
 func CreatePost(post entities.Post) (int, error) {

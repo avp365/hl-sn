@@ -4,8 +4,8 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/avp365/hl-sn/internal/entities"
-	"github.com/avp365/hl-sn/internal/pkg/rufaker"
+	"github.com/avp365/hl-sn/srv/sn/internal/entities"
+	"github.com/avp365/hl-sn/srv/sn/internal/pkg/rufaker"
 )
 
 func GenerateRndUser() entities.User {

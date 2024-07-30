@@ -6,10 +6,10 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/avp365/hl-sn/internal/entities"
-	"github.com/avp365/hl-sn/internal/handlers/post"
-	"github.com/avp365/hl-sn/internal/handlers/user"
-	"github.com/avp365/hl-sn/internal/pkg/configs"
+	"github.com/avp365/hl-sn/srv/sn/internal/entities"
+	"github.com/avp365/hl-sn/srv/sn/internal/handlers/post"
+	"github.com/avp365/hl-sn/srv/sn/internal/handlers/user"
+	"github.com/avp365/hl-sn/srv/sn/internal/pkg/configs"
 	"github.com/go-redis/redis"
 )
 

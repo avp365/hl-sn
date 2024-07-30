@@ -3,7 +3,7 @@ package repositories
 import (
 	"context"
 
-	"github.com/avp365/hl-sn/internal/entities"
+	"github.com/avp365/hl-sn/srv/sn/internal/entities"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 	log "github.com/sirupsen/logrus"

@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 
-	"github.com/avp365/hl-sn/internal/entities"
+	"github.com/avp365/hl-sn/srv/sn/internal/entities"
 	"github.com/jackc/pgx/v5"
 	log "github.com/sirupsen/logrus"
 )

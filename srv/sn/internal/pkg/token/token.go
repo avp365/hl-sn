@@ -4,7 +4,7 @@ import (
 	"errors"
 	"strings"
 
-	"github.com/avp365/hl-sn/internal/pkg/configs"
+	"github.com/avp365/hl-sn/srv/sn/internal/pkg/configs"
 	"github.com/golang-jwt/jwt"
 )
 
