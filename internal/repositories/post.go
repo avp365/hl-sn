@@ -2,7 +2,6 @@ package repositories
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/avp365/hl-sn/internal/entities"
 	"github.com/jackc/pgx/v5"
@@ -63,7 +62,6 @@ func (r *PostRepository) PostUpdate(post entities.Post) (int, error) {
 
 	query := `UPDATE ` + tableNamePosts + ` SET text=$1 , date=$2 where id=$3 and user_id=$4 returning id`
 
-	fmt.Println(post)
 	_, err := r.DBPostr.Exec(context.Background(), query, post.Text, post.Date, post.ID, post.UserID)
 
 	if err != nil {

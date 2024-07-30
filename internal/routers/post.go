@@ -68,6 +68,14 @@ func PostDelete(c *gin.Context) {
 		c.String(http.StatusInternalServerError, "Ошибка сервера: %v", err)
 		return
 	}
+
+	err = queue.LPush(queueName, strconv.Itoa(userId)).Err()
+
+	if err != nil {
+		c.String(http.StatusInternalServerError, "Ошибка сервера: %v", err)
+		return
+	}
+
 	c.JSON(http.StatusOK, isDelete)
 
 }
@@ -96,6 +104,14 @@ func PostUpdate(c *gin.Context) {
 		c.String(http.StatusInternalServerError, "Ошибка сервера: %v", err)
 		return
 	}
+
+	err = queue.LPush(queueName, strconv.Itoa(userId)).Err()
+
+	if err != nil {
+		c.String(http.StatusInternalServerError, "Ошибка сервера: %v", err)
+		return
+	}
+
 	c.JSON(http.StatusOK, users)
 
 }
