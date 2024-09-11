@@ -3,6 +3,8 @@ go-srv-sn:
 	docker exec -it $(PROJECT)_app_1 bash -c "go run ./srv/sn/cmd/app/main.go"
 go-srv-sn-cl:	
 	docker exec -it $(PROJECT)_app_1 bash -c "go run ./srv/sn/cmd/cl/main.go"
+go-srv-wss:	
+	docker exec -it $(PROJECT)_app_1 bash -c "go run ./srv/wss/cmd/app/main.go"	
 go-build:
 	docker exec -it $(PROJECT) bash -c "go build -o /go/bin/app ./srv/sn/cmd/app/main.go" ;docker-compose -f docker-compose.yml -f docker-compose-add.yml -p $(PROJECT) up
 migr:
